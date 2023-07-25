@@ -1,0 +1,43 @@
+@import './../../styles/variables';
+
+.form {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+
+    input[type="text"],
+    button {
+        outline: none;
+    }
+
+    input[type="text"] {
+        height: 56px;
+        border: $color-white 2px solid;
+        border-radius: $border-radius / 2;
+        background-color: $color-bg;
+        color: $color-black;
+        font-family: $font-family;
+        text-align: center;
+        font-size: $font-size;
+
+        &::placeholder {
+            color: rgba($color-white, 50%);
+        }
+    }
+
+    button {
+        background-color: $color-black;
+        height: 56px;
+        color: $color-white;
+        font-family: $font-family;
+        border-radius: $border-radius / 2;
+
+        &:hover {
+            color: $color-hover
+        }
+
+        &:disabled {
+            color: rgba($color-white, 0.5);
+        }
+    }
+}

@@ -1,0 +1,26 @@
+@font-face {
+  font-family: 'fontello';
+  src: url('./fontello/font/fontello.woff2?88124007') format('woff2'),
+       url('./fontello/font/fontello.woff?88124007') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;  
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .5em;
+  text-align: center;
+  
+}
+
+.icon-share:before { content: '\e800'; }  
+.icon-close:before { content: '\e801'; } 
+.icon-copy:before { content: '\e802'; }  
+.icon-link:before { content: '\e803'; } 
+.icon-checked:before { content: '\e804'; } 

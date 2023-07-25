@@ -1,0 +1,6 @@
+
+.icon-share:before { content: '\e800'; } /* '' */
+.icon-close:before { content: '\e801'; } /* '' */
+.icon-copy:before { content: '\e802'; } /* '' */
+.icon-link:before { content: '\e803'; } /* '' */
+.icon-checked:before { content: '\e804'; } /* '' */

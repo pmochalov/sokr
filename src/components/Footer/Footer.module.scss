@@ -1,0 +1,15 @@
+@import './../../styles/variables';
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+        color: rgba($color-white, 0.5);
+
+        &:hover {
+            color: $color-hover
+        }
+    }
+}
