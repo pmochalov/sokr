@@ -1,16 +1,15 @@
 import React from "react";
 import QRCode from "qrcode";
-import { SokrContext } from "../../App";
-
-import { useContext } from "react";
 import s from "./Info.module.scss";
 
-const Info = () => {
-    const { sokrData } = useContext(SokrContext);
-    const [qrUrl, setQrUrl] = React.useState("");
-    const [isCopied, setIsCopied] = React.useState(false);
+import { useSokr } from "../../App";
 
-    const generateQR = async (stroke) => {
+const Info: React.FC = () => {
+    const { sokrData } = useSokr();
+    const [qrUrl, setQrUrl] = React.useState<string>("");
+    const [isCopied, setIsCopied] = React.useState<boolean>(false);
+
+    const generateQR = async (stroke: string) => {
         try {
             const url = await QRCode.toDataURL(stroke, {
                 width: 70,
@@ -18,11 +17,11 @@ const Info = () => {
             });
             setQrUrl(url);
         } catch (e) {
-            console.error("Error qr-code: ", e.message);
+            console.error("Error qr-code: ", (e as Error).message);
         }
     };
 
-    const handleClickCopy = async () => {
+    const handleClickCopy = async (): Promise<void> => {
         await navigator.clipboard.writeText(sokrData.url_short);
         setIsCopied(true);
     };
@@ -56,7 +55,7 @@ const Info = () => {
             </div>
             <div className={s.info__qr}>
                 <div>
-                    <img src={qrUrl} />
+                    <img src={qrUrl} alt='qr code' />
                 </div>
             </div>
         </div>

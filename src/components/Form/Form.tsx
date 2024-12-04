@@ -1,20 +1,21 @@
-import React, { useContext } from "react";
+import React from "react";
 import s from "./Form.module.scss";
-import { SokrContext } from "../../App";
 
-const Form = () => {
-    const { sokrData, setSokrData } = useContext(SokrContext);
+import { useSokr } from "../../App";
 
-    const handleChangeUrl = (e) => {
-        setSokrData({ ...sokrData, url: e.target.value, is_created: false });
+const Form: React.FC = () => {
+    const { sokrData, setSokrData } = useSokr();
+
+    const handleChangeUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSokrData((prev) => ({
+            ...prev,
+            url: e.target.value,
+            is_created: false,
+        }));
     };
 
-    const createLink = (e) => {
+    const createLink = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        getData();
-    };
-
-    const getData = async () => {
         try {
             const formData = new FormData();
             formData.append("url", sokrData.url);
@@ -22,7 +23,7 @@ const Form = () => {
             const response = await fetch(
                 `${process.env.REACT_APP_API_URL}add`,
                 {
-                    method: "post",
+                    method: "POST",
                     body: formData,
                 }
             );
@@ -30,18 +31,17 @@ const Form = () => {
             const data = await response.json();
 
             setSokrData({
-                ...sokrData,
                 url: data.url,
                 url_short: data.url_short,
                 is_created: true,
             });
-        } catch (e) {
-            console.log("Ошибка: ", e.message);
+        } catch (error) {
+            console.error("Ошибка при создании короткой ссылки:", error);
         }
     };
 
     const resetForm = () => {
-        setSokrData({ ...sokrData, url: "", is_created: false });
+        setSokrData({ url: "", url_short: "", is_created: false });
     };
 
     return (
@@ -49,21 +49,19 @@ const Form = () => {
             <input
                 type='text'
                 name='url'
-                onChange={handleChangeUrl}
                 value={sokrData.url}
+                onChange={handleChangeUrl}
                 placeholder='https://...'
             />
 
-            {!sokrData.is_created && (
+            {!sokrData.is_created ? (
                 <button
                     onClick={createLink}
                     disabled={sokrData.url.trim().length === 0}
                 >
                     Сократить ссылку
                 </button>
-            )}
-
-            {sokrData.is_created && (
+            ) : (
                 <button onClick={resetForm}>
                     <figure className='icon-close'></figure>Очистить
                 </button>
